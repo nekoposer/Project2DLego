@@ -68,6 +68,6 @@ public class ActionListenerChangeColor implements ActionListener {
                 break;
         }
         cardLayout.show(container, panelNameToSwitchTo);
-        drawPanel.playWavMusic("D:\\intellij idea\\Lego\\data\\glichery - Sea Of Problems.wav");
+        drawPanel.playWavMusic("data\\glichery - Sea Of Problems.wav");
     }
 }
