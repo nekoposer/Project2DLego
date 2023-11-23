@@ -1,0 +1,130 @@
+@startuml
+
+skinparam linetype ortho
+
+class ActionListenerChangeColor {
+  - panel: JPanel
+  - panelNameToSwitchTo: String
+  - container: Container
+  - cardLayout: CardLayout
+  + actionPerformed(ActionEvent): void
+}
+class ActionListenerChangeDetailColor {
+  - panel: DrawPanel
+  + actionPerformed(ActionEvent): void
+}
+class ActionListenerChangeSize {
+  - cardLayout: CardLayout
+  - container: Container
+  - test: DrawPanel
+  - panel: JPanel
+  - panelNameToSwitchTo: String
+  + actionPerformed(ActionEvent): void
+}
+class ActionListenerClear {
+  - panel: DrawPanel
+  + actionPerformed(ActionEvent): void
+}
+class ActionListenerDownload {
+  - panel: DrawPanel
+  - legoGame: JPanel
+  - number: int
+  + ActionListenerDownload(panel: DrawPanel, legoGame: JPanel)
+  + actionPerformed(ActionEvent): void
+  + savePanel(JPanel, String): void
+}
+class ActionListenerExit {
+  - frame: JFrame
+  + actionPerformed(ActionEvent): void
+}
+class ActionListenerExitMenu {
+  - cardLayout: CardLayout
+  - panelNameToSwitchTo: String
+  - panel: DrawPanel
+  - container: Container
+  + actionPerformed(ActionEvent): void
+}
+class ActionListenerMute {
+  - isMuted: boolean
+  - panel: DrawPanel
+  - muteButton: JButton
+  + ActionListenerMute(panel: DrawPanel, muteButton: JButton)
+  + actionPerformed(ActionEvent): void
+}
+class ActionListenerSetDetail {
+  - panel: DrawPanel
+  + actionPerformed(ActionEvent): void
+}
+class ActionListenerSwitch {
+  - container: Container
+  - cardLayout: CardLayout
+  - panelNameToSwitchTo: String
+  + actionPerformed(ActionEvent): void
+}
+class DrawPanel {
+  - grid: boolean[][]
+  - color: Color
+  - detailWidth: int
+  - rows: int
+  - colors: Color[][]
+  - cols: int
+  - detailHeight: int
+  + addGridMouseListener(): void
+  + setSize(int, int): void
+  # paintComponent(Graphics): void
+  + setDetail(int, int): void
+  + setColor(Color): void
+  + clearGrid(): void
+  + playWavMusic(String): void
+  + stopWavMusic(): void
+}
+class GridComponent {
+  - gridSizeHorizontal: int
+  - gridSizeVertical: int
+  # paintComponent(Graphics): void
+  + getSize(int): int
+}
+class LegoPanel {
+  # paintComponent(Graphics): void
+}
+class Main {
+  + main(String[]): void
+}
+class Start {
+  - cardLayout: CardLayout
+  - panel: JPanel
+  - test: DrawPanel
+  - cardPanel: JPanel
+  - legoGame: JPanel
+  - legoPanel: LegoPanel
+  - gamePanel: JPanel
+  - colorPanel: JPanel
+}
+
+ActionListenerChangeDetailColor *--> DrawPanel
+ActionListenerChangeSize *--> DrawPanel
+ActionListenerChangeSize ..> GridComponent
+ActionListenerClear *--> DrawPanel
+ActionListenerDownload *--> DrawPanel
+ActionListenerExitMenu *--> DrawPanel
+ActionListenerMute *--> DrawPanel
+ActionListenerSetDetail *--> DrawPanel
+ActionListenerSwitch *--> DrawPanel
+Main ..> Start
+Start ..> ActionListenerChangeColor
+Start ..> ActionListenerChangeDetailColor
+Start ..> ActionListenerChangeSize
+Start ..> ActionListenerClear
+Start ..> ActionListenerDownload
+Start ..> ActionListenerExit
+Start ..> ActionListenerExitMenu
+Start ..> ActionListenerMute
+Start ..> ActionListenerSetDetail
+Start ..> ActionListenerSwitch
+Start *--> DrawPanel
+Start ..> DrawPanel
+Start ..> GridComponent
+Start ..> LegoPanel
+Start *--> LegoPanel
+
+@enduml
