@@ -110,7 +110,7 @@ public class ActionListenerChangeColor implements ActionListener {
                 break;
         }
         cardLayout.show(container, panelNameToSwitchTo);
-        drawPanel.playWavMusic("src\\Main\\Resources\\data\\glichery - Sea Of Problems.wav");
+        drawPanel.playWavMusic("src\\main\\resources\\data\\glichery - Sea Of Problems.wav");
         setTimer(label);
 
     }

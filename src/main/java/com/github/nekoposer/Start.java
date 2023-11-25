@@ -43,15 +43,16 @@ public class Start extends JFrame {
         JButton exit = new JButton("Exit game");
         JLabel title = new JLabel("2D LEGO");
         try {
-            testFont = Font.createFont(Font.TRUETYPE_FONT, new File("src\\Main\\Resources\\data\\LEGO.ttf"));
+            testFont = Font.createFont(Font.TRUETYPE_FONT, new File("src\\main\\resources\\data\\LEGO.ttf"));
         } catch (FontFormatException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        setIconImage(new ImageIcon("src\\Main\\Resources\\data\\lego_icon.jpg").getImage());
+        setIconImage(new ImageIcon("src\\main\\resources\\data\\lego_icon.jpg").getImage());
 
         title.setFont(testFont.deriveFont(Font.BOLD, 55f));
+        title.setIcon(new ImageIcon("src\\main\\resources\\data\\title_main.png"));
 
         start.setBounds(290, 220, 120, 25);
         exit.setBounds(290, 250, 120, 25);
@@ -324,10 +325,10 @@ public class Start extends JFrame {
         drawPanel.setOpaque(false);
         legoPanel.add(drawPanel);
 
-        muteSound.setIcon(new ImageIcon("src\\Main\\Resources\\data\\unmute.png"));
+        muteSound.setIcon(new ImageIcon("src\\main\\resources\\data\\unmute.png"));
         muteSound.setOpaque(false);
-        download.setIcon(new ImageIcon("src\\Main\\Resources\\data\\download_icon4.jpg"));
-        help.setIcon(new ImageIcon("src\\Main\\Resources\\data\\help.png"));
+        download.setIcon(new ImageIcon("src\\main\\resources\\data\\download_icon4.jpg"));
+        help.setIcon(new ImageIcon("src\\main\\resources\\data\\help.png"));
 
         legoPanel.add(timer);
         legoPanel.add(help);
