@@ -21,11 +21,11 @@ public class ActionListenerMute implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         isMuted = !isMuted;
         if (!isMuted) {
-            panel.playWavMusic("data\\glichery - Sea Of Problems.wav");
-            muteButton.setIcon(new ImageIcon("data\\unmute.png"));
+            panel.playWavMusic("src\\Main\\Resources\\data\\glichery - Sea Of Problems.wav");
+            muteButton.setIcon(new ImageIcon("src\\Main\\Resources\\data\\unmute.png"));
         } else {
             panel.stopWavMusic();
-            muteButton.setIcon(new ImageIcon("data\\mute.png"));
+            muteButton.setIcon(new ImageIcon("src\\Main\\Resources\\data\\mute.png"));
         }
     }
 }

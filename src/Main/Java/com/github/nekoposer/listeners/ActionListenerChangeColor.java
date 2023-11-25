@@ -16,14 +16,56 @@ public class ActionListenerChangeColor implements ActionListener {
     private Container container;
     private JPanel panel;
     private DrawPanel drawPanel;
+    Thread timerThread;
+    private static boolean timerRunning = false;
+    private static int seconds = 0;
+    private JLabel label;
 
-    public ActionListenerChangeColor(CardLayout cardLayout, Container container, String panelNameToSwitchTo, JPanel panel, DrawPanel drawPanel) {
+    public ActionListenerChangeColor(CardLayout cardLayout, Container container, String panelNameToSwitchTo, JPanel panel, DrawPanel drawPanel, JLabel label, Thread timerThread) {
         this.cardLayout = cardLayout;
         this.panelNameToSwitchTo = panelNameToSwitchTo;
         this.container = container;
         this.panel = panel;
         this.drawPanel = drawPanel;
+        this.label = label;
+        this.timerThread = timerThread;
+
     }
+    public void setTimer(JLabel timerLabel) {
+        timerThread = new Thread(new Runnable() {
+            public void run() {
+                timerRunning = true;
+                while (!Thread.interrupted() && timerRunning) {
+                    try {
+                        Thread.sleep(1000);
+                        seconds++;
+                        int minutes = seconds / 60;
+                        int hours = minutes / 60;
+                        int remainingSeconds = seconds % 60;
+                        timerLabel.setText(String.format("%02d:%02d:%02d", hours, minutes, remainingSeconds));
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+            }
+        });
+        timerThread.start();
+    }
+    public static void stopTimer() {
+        timerRunning = false;
+        seconds = 0;
+    }
+    public static int[] getCurrentTime(JLabel label) {
+        int[] resultTimes = new int[3];
+        String time = label.getText();
+        String[] times = time.split(":");
+        resultTimes[0] = Integer.parseInt(times[0]);
+        resultTimes[1] = Integer.parseInt(times[1]);
+        resultTimes[2] = Integer.parseInt(times[2]);
+
+        return resultTimes;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         String color = e.getActionCommand();
@@ -68,6 +110,8 @@ public class ActionListenerChangeColor implements ActionListener {
                 break;
         }
         cardLayout.show(container, panelNameToSwitchTo);
-        drawPanel.playWavMusic("data\\glichery - Sea Of Problems.wav");
+        drawPanel.playWavMusic("src\\Main\\Resources\\data\\glichery - Sea Of Problems.wav");
+        setTimer(label);
+
     }
 }

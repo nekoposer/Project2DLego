@@ -4,6 +4,7 @@ import com.github.nekoposer.listeners.*;
 import com.github.nekoposer.panels.DrawPanel;
 import com.github.nekoposer.panels.GridComponent;
 import com.github.nekoposer.panels.LegoPanel;
+import com.github.nekoposer.panels.TextFieldName;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +22,10 @@ public class Start extends JFrame {
     private JPanel cardPanel = new JPanel(cardLayout);
     private Font testFont;
     private JFrame controls = new JFrame("Rules");
+    private TextFieldName enterName = new TextFieldName();
+    private Thread timerThread;
+    JLabel timer = new JLabel("00:00:00", SwingConstants.CENTER);
+
 
 
     public Start() {
@@ -38,13 +43,13 @@ public class Start extends JFrame {
         JButton exit = new JButton("Exit game");
         JLabel title = new JLabel("2D LEGO");
         try {
-            testFont = Font.createFont(Font.TRUETYPE_FONT, new File("data\\LEGO.ttf"));
+            testFont = Font.createFont(Font.TRUETYPE_FONT, new File("src\\Main\\Resources\\data\\LEGO.ttf"));
         } catch (FontFormatException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        setIconImage(new ImageIcon("data\\lego_icon.jpg").getImage());
+        setIconImage(new ImageIcon("src\\Main\\Resources\\data\\lego_icon.jpg").getImage());
 
         title.setFont(testFont.deriveFont(Font.BOLD, 55f));
 
@@ -62,12 +67,14 @@ public class Start extends JFrame {
         add(cardPanel);
 
         exit.addActionListener(new ActionListenerExit(this));
-        start.addActionListener(new ActionListenerSwitch(cardLayout, cardPanel, "chooseSize"));
+        start.addActionListener(new ActionListenerSwitch(cardLayout, cardPanel, "chooseSize", enterName));
+
+        start.setActionCommand("showNameField");
 
         //экран с выбором размера игрового поля
 
         JButton backToMenu = new JButton("Back");
-        backToMenu.addActionListener(new ActionListenerSwitch(cardLayout, cardPanel, "start"));
+        backToMenu.addActionListener(new ActionListenerSwitch(cardLayout, cardPanel, "start", enterName));
         backToMenu.setBounds(630, 0, 70, 30);
 
         gamePanel.setLayout(null);
@@ -112,7 +119,7 @@ public class Start extends JFrame {
 
 
         JButton back = new JButton("Back");
-        back.addActionListener(new ActionListenerSwitch(cardLayout, cardPanel, "chooseSize"));
+        back.addActionListener(new ActionListenerSwitch(cardLayout, cardPanel, "chooseSize", enterName));
         back.setBounds(630, 0, 70, 30);
         colorPanel.add(back);
 
@@ -185,18 +192,23 @@ public class Start extends JFrame {
 
         black.setForeground(Color.WHITE);
 
-        red.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel));
-        orange.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel));
-        yellow.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel));
-        green.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel));
-        cyan.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel));
-        blue.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel));
-        purple.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel));
-        clean.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel));
-        white.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel));
-        black.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel));
-        lightGreen.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel));
-        pink.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel));
+        //время в игре
+
+
+        timer.setFont(font);
+
+        red.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel, timer, timerThread));
+        orange.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel, timer, timerThread));
+        yellow.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel, timer, timerThread));
+        green.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel, timer, timerThread));
+        cyan.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel, timer, timerThread));
+        blue.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel, timer, timerThread));
+        purple.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel, timer, timerThread));
+        clean.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel, timer, timerThread));
+        white.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel, timer, timerThread));
+        black.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel, timer, timerThread));
+        lightGreen.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel, timer, timerThread));
+        pink.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel, timer, timerThread));
 
         //игровой экран
 
@@ -223,6 +235,7 @@ public class Start extends JFrame {
         JButton pinkDetail = new JButton();
 
         JLabel colorDetail = new JLabel("Choose detail color", JLabel.CENTER);
+
         colorDetail.setFont(font);
 
         redDetail.setBackground(Color.RED);
@@ -255,6 +268,7 @@ public class Start extends JFrame {
         muteSound.setBounds(670, 502, 30, 30);
         download.setBounds(635, 502, 30, 30);
         help.setBounds(600, 502, 30, 30);
+        timer.setBounds(483, 502, 127, 30);
         
         redDetail.setActionCommand("red");
         orangeDetail.setActionCommand("orange");
@@ -280,7 +294,7 @@ public class Start extends JFrame {
         lightGreenDetail.addActionListener(new ActionListenerChangeDetailColor(drawPanel));
         pinkDetail.addActionListener(new ActionListenerChangeDetailColor(drawPanel));
 
-        exitMenu.addActionListener(new ActionListenerExitMenu(cardLayout, cardPanel, "start", drawPanel));
+        exitMenu.addActionListener(new ActionListenerExitMenu(cardLayout, cardPanel, "start", drawPanel, timer, enterName));
         clear.addActionListener(new ActionListenerClear(drawPanel));
         muteSound.addActionListener(new ActionListenerMute(drawPanel, muteSound));
         download.addActionListener(new ActionListenerDownload(drawPanel, legoGame));
@@ -310,11 +324,12 @@ public class Start extends JFrame {
         drawPanel.setOpaque(false);
         legoPanel.add(drawPanel);
 
-        muteSound.setIcon(new ImageIcon("data\\unmute.png"));
+        muteSound.setIcon(new ImageIcon("src\\Main\\Resources\\data\\unmute.png"));
         muteSound.setOpaque(false);
-        download.setIcon(new ImageIcon("data\\download_icon4.jpg"));
-        help.setIcon(new ImageIcon("data\\help.png"));
+        download.setIcon(new ImageIcon("src\\Main\\Resources\\data\\download_icon4.jpg"));
+        help.setIcon(new ImageIcon("src\\Main\\Resources\\data\\help.png"));
 
+        legoPanel.add(timer);
         legoPanel.add(help);
         legoPanel.add(download);
         legoPanel.add(muteSound);
