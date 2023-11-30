@@ -27,7 +27,6 @@ public class TextFieldName extends JFrame {
         add(submitButton);
 
         submitButton.addActionListener(new ActionListenerSubmitName(this));
-
     }
     public String getText() {
         return textField.getText();

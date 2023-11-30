@@ -1,9 +1,7 @@
 package com.github.nekoposer.listeners;
 
-import com.github.nekoposer.database.PostgreSQLConnect;
 import com.github.nekoposer.panels.DrawPanel;
 import com.github.nekoposer.panels.GridComponent;
-import com.github.nekoposer.panels.TextFieldName;
 
 import javax.swing.*;
 import java.awt.CardLayout;
@@ -53,6 +51,5 @@ public class ActionListenerChangeSize implements ActionListener {
                 break;
         }
         cardLayout.show(container, panelNameToSwitchTo);
-
     }
 }

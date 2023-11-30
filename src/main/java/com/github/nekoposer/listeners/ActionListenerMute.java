@@ -11,7 +11,6 @@ public class ActionListenerMute implements ActionListener {
     private DrawPanel panel;
     private JButton muteButton;
 
-
     public ActionListenerMute(DrawPanel panel, JButton muteButton) {
         this.panel = panel;
         this.muteButton = muteButton;
@@ -25,7 +24,7 @@ public class ActionListenerMute implements ActionListener {
             muteButton.setIcon(new ImageIcon("src\\main\\resources\\data\\unmute.png"));
         } else {
             panel.stopWavMusic();
-            muteButton.setIcon(new ImageIcon("src\\main\\resources\\data\\mute.png"));
+            muteButton.setIcon(new ImageIcon("src\\main\\esources\\data\\mute.png"));
         }
     }
 }

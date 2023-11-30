@@ -29,8 +29,8 @@ public class ActionListenerChangeColor implements ActionListener {
         this.drawPanel = drawPanel;
         this.label = label;
         this.timerThread = timerThread;
-
     }
+
     public void setTimer(JLabel timerLabel) {
         timerThread = new Thread(new Runnable() {
             public void run() {
@@ -51,10 +51,12 @@ public class ActionListenerChangeColor implements ActionListener {
         });
         timerThread.start();
     }
+
     public static void stopTimer() {
         timerRunning = false;
         seconds = 0;
     }
+
     public static int[] getCurrentTime(JLabel label) {
         int[] resultTimes = new int[3];
         String time = label.getText();
@@ -112,6 +114,5 @@ public class ActionListenerChangeColor implements ActionListener {
         cardLayout.show(container, panelNameToSwitchTo);
         drawPanel.playWavMusic("src\\main\\resources\\data\\glichery - Sea Of Problems.wav");
         setTimer(label);
-
     }
 }

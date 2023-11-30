@@ -1,10 +1,7 @@
 package com.github.nekoposer;
 
 import com.github.nekoposer.listeners.*;
-import com.github.nekoposer.panels.DrawPanel;
-import com.github.nekoposer.panels.GridComponent;
-import com.github.nekoposer.panels.LegoPanel;
-import com.github.nekoposer.panels.TextFieldName;
+import com.github.nekoposer.panels.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,13 +17,12 @@ public class Start extends JFrame {
     private LegoPanel legoPanel = new LegoPanel();
     private CardLayout cardLayout = new CardLayout();
     private JPanel cardPanel = new JPanel(cardLayout);
+    private LeadersPanel leaders = new LeadersPanel();
     private Font testFont;
     private JFrame controls = new JFrame("Rules");
     private TextFieldName enterName = new TextFieldName();
     private Thread timerThread;
     JLabel timer = new JLabel("00:00:00", SwingConstants.CENTER);
-
-
 
     public Start() {
         super("Lego");
@@ -41,6 +37,7 @@ public class Start extends JFrame {
 
         JButton start = new JButton("Start game");
         JButton exit = new JButton("Exit game");
+        JButton leader = new JButton("Leaders");
         JLabel title = new JLabel("2D LEGO");
         try {
             testFont = Font.createFont(Font.TRUETYPE_FONT, new File("src\\main\\resources\\data\\LEGO.ttf"));
@@ -52,25 +49,33 @@ public class Start extends JFrame {
         setIconImage(new ImageIcon("src\\main\\resources\\data\\lego_icon.jpg").getImage());
 
         title.setFont(testFont.deriveFont(Font.BOLD, 55f));
-        title.setIcon(new ImageIcon("src\\main\\resources\\data\\title_main.png"));
 
         start.setBounds(290, 220, 120, 25);
         exit.setBounds(290, 250, 120, 25);
+        leader.setBounds(290, 300, 120, 25);
         title.setBounds(260, 80, 325, 106);
-
 
         panel.add(start);
         panel.add(exit);
         panel.add(title);
+        panel.add(leader);
 
         cardPanel.add(panel, "start");
         cardPanel.add(gamePanel, "chooseSize");
+        cardPanel.add(leaders, "leaders");
         add(cardPanel);
 
         exit.addActionListener(new ActionListenerExit(this));
         start.addActionListener(new ActionListenerSwitch(cardLayout, cardPanel, "chooseSize", enterName));
+        leader.addActionListener(new ActionListenerSwitch(cardLayout, cardPanel, "leaders", enterName));
 
         start.setActionCommand("showNameField");
+
+        //экран с таблицей лидеров
+
+        JButton backToStartPanel = new JButton("Back");
+        backToStartPanel.addActionListener(new ActionListenerSwitch(cardLayout, cardPanel, "start", enterName));
+        leaders.add(backToStartPanel);
 
         //экран с выбором размера игрового поля
 
@@ -117,7 +122,6 @@ public class Start extends JFrame {
         font = new Font("Verdana", Font.BOLD, 14);
         label2.setFont(font);
         label2.setBounds(250, 150, 200, 60);
-
 
         JButton back = new JButton("Back");
         back.addActionListener(new ActionListenerSwitch(cardLayout, cardPanel, "chooseSize", enterName));
@@ -195,7 +199,6 @@ public class Start extends JFrame {
 
         //время в игре
 
-
         timer.setFont(font);
 
         red.addActionListener(new ActionListenerChangeColor(cardLayout, cardPanel, "legoGame", legoGame, drawPanel, timer, timerThread));
@@ -215,8 +218,6 @@ public class Start extends JFrame {
 
         legoPanel.setLayout(null);
         cardPanel.add(legoPanel, "legoGame");
-        
-        //700 на 500
 
         JButton help = new JButton();
         JButton download = new JButton();

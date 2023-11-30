@@ -17,7 +17,9 @@ public class ActionListenerSubmitName implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        PostgreSQLConnect.insertDataIntoDB(frame.getText(), 0);
+        if (!frame.getText().equals("")) {
+            PostgreSQLConnect.insertDataIntoDB(frame.getText(), 0);
+        }
         frame.dispose();
     }
 }

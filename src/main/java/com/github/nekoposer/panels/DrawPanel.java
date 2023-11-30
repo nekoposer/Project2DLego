@@ -21,7 +21,6 @@ public class DrawPanel extends JPanel {
     private int currentRow = -1;
     private int currentCol = -1;
 
-
     public DrawPanel(int rows, int cols) {
         this.rows = rows;
         this.cols = cols;

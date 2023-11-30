@@ -16,7 +16,6 @@ public class ActionListenerDownload implements ActionListener {
     private JPanel legoGame;
     private int number = 0;
 
-
     public ActionListenerDownload(DrawPanel panel, JPanel legoGame) {
         this.legoGame = legoGame;
         this.panel = panel;
@@ -30,6 +29,7 @@ public class ActionListenerDownload implements ActionListener {
         panel.setOpaque(false);
         ++number;
     }
+
     public static void savePanel(JPanel panel, String filePath) {
         try {
             BufferedImage image = new BufferedImage(panel.getWidth(), panel.getHeight(), BufferedImage.TYPE_INT_RGB);

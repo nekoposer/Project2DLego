@@ -1,7 +1,9 @@
 package com.github.nekoposer.database;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PostgreSQLConnect {
@@ -9,9 +11,8 @@ public class PostgreSQLConnect {
     static String user = "admin";
     static String password = "root";
 
-
     //селект
-    public static Map<String, Integer> getAnswerFromDB(String index) {
+    public static Map<String, Integer> selectDataFromDB(String index) {
         Map<String, Integer> result = new HashMap<>();
         String select = """
             SELECT name, time
@@ -41,7 +42,6 @@ public class PostgreSQLConnect {
     }
 
     // инсерт
-
     public static void insertDataIntoDB(String name, int time) {
         String insert = """
             INSERT INTO leaders (name, time)
@@ -63,7 +63,7 @@ public class PostgreSQLConnect {
     }
 
     //апдейт
-    public static void updateDataInDB(String name, int newTime) {
+    public static void updateDataInDB(String name, int time) {
         String update = """
             UPDATE leaders
             SET time = ?
@@ -72,7 +72,7 @@ public class PostgreSQLConnect {
         try {
             Connection connection = DriverManager.getConnection(url, user, password);
             PreparedStatement statement = connection.prepareStatement(update);
-            statement.setInt(1, newTime);
+            statement.setInt(1, time);
             statement.setString(2, name);
             statement.executeUpdate();
 
@@ -84,4 +84,32 @@ public class PostgreSQLConnect {
         }
     }
 
+    //селект всё
+    public static List<Map<String, Integer>> selectAllFromDB() {
+        List<Map<String, Integer>> result = new ArrayList<>();
+        String select = """
+        SELECT name, time
+        FROM leaders
+        ORDER BY time DESC
+        """;
+        try {
+            Connection connection = DriverManager.getConnection(url, user, password);
+            PreparedStatement statement = connection.prepareStatement(select);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Map<String, Integer> row = new HashMap<>();
+                row.put(resultSet.getString("name"), resultSet.getInt("time"));
+                result.add(row);
+            }
+
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return result;
+    }
 }

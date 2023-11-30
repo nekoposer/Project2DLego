@@ -9,7 +9,6 @@ import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Container;
-import java.nio.channels.SelectableChannel;
 import java.util.Map;
 
 public class ActionListenerExitMenu implements ActionListener {
@@ -19,7 +18,6 @@ public class ActionListenerExitMenu implements ActionListener {
     private DrawPanel panel;
     private JLabel label;
     private TextFieldName frame;
-
 
     public ActionListenerExitMenu(CardLayout cardLayout, Container container, String panelNameToSwitchTo, DrawPanel panel, JLabel label, TextFieldName frame) {
         this.cardLayout = cardLayout;
@@ -37,7 +35,7 @@ public class ActionListenerExitMenu implements ActionListener {
         panel.stopWavMusic();
         ActionListenerChangeColor.stopTimer();
 
-        Map<String, Integer> result = PostgreSQLConnect.getAnswerFromDB(frame.getText());
+        Map<String, Integer> result = PostgreSQLConnect.selectDataFromDB(frame.getText());
         int DBTime = result.get(frame.getText());
 
         String[] currentTimesArray = label.getText().split(":");
@@ -47,8 +45,6 @@ public class ActionListenerExitMenu implements ActionListener {
         }
 
         int finalTime = currentTime + DBTime;
-        System.out.println(currentTime + "\n" + DBTime + "\n" + finalTime);
         PostgreSQLConnect.updateDataInDB(frame.getText(), finalTime);
     }
-
 }
