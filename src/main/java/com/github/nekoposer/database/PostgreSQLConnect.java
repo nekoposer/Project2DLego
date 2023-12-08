@@ -48,14 +48,17 @@ public class PostgreSQLConnect {
             VALUES (?, ?)
             """;
         try {
-            Connection connection = DriverManager.getConnection(url, user, password);
-            PreparedStatement statement = connection.prepareStatement(insert);
-            statement.setString(1, name);
-            statement.setInt(2, time);
-            statement.executeUpdate();
+            Map<String, Integer> existing = PostgreSQLConnect.selectDataFromDB(name);
+            if (existing.size() == 0) {
+                Connection connection = DriverManager.getConnection(url, user, password);
+                PreparedStatement statement = connection.prepareStatement(insert);
+                statement.setString(1, name);
+                statement.setInt(2, time);
+                statement.executeUpdate();
 
-            statement.close();
-            connection.close();
+                statement.close();
+                connection.close();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
