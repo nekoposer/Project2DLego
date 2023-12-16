@@ -22,9 +22,9 @@ public class DatabaseTest {
         Map<String, Integer> fourthPlayer = new HashMap<>();
         Map<String, Integer> testPlayer = new HashMap<>();
 
-        firstPlayer.put("hh", 31);
-        secondPlayer.put("poma", 19);
-        thirdPlayer.put("z", 17);
+        firstPlayer.put("poma", 76);
+        secondPlayer.put("z", 75);
+        thirdPlayer.put("hh", 31);
         fourthPlayer.put("qd", 0);
         testPlayer.put("test", 3);
 
@@ -42,7 +42,7 @@ public class DatabaseTest {
     @DisplayName("Test select query")
     public void selectTest() {
         Map<String, Integer> result = new HashMap<>();
-        result.put("z", 17);
+        result.put("z", 75);
 
         Map<String, Integer> testFromDB = PostgreSQLConnect.selectDataFromDB("z");
         Assertions.assertEquals(result, testFromDB);
@@ -61,9 +61,9 @@ public class DatabaseTest {
         Map<String, Integer> fourthPlayer = new HashMap<>();
         Map<String, Integer> testPlayer = new HashMap<>();
 
-        firstPlayer.put("hh", 31);
-        secondPlayer.put("poma", 19);
-        thirdPlayer.put("z", 17);
+        firstPlayer.put("poma", 76);
+        secondPlayer.put("z", 75);
+        thirdPlayer.put("hh", 31);
         fourthPlayer.put("qd", 0);
         testPlayer.put("test", 3);
 
@@ -90,9 +90,9 @@ public class DatabaseTest {
         Map<String, Integer> fourthPlayer = new HashMap<>();
         Map<String, Integer> testPlayer = new HashMap<>();
 
-        firstPlayer.put("hh", 31);
-        secondPlayer.put("poma", 19);
-        thirdPlayer.put("z", 17);
+        firstPlayer.put("poma", 76);
+        secondPlayer.put("z", 75);
+        thirdPlayer.put("hh", 31);
         fourthPlayer.put("qd", 0);
         testPlayer.put("test", 3);
 

@@ -57,17 +57,6 @@ public class ActionListenerChangeColor implements ActionListener {
         seconds = 0;
     }
 
-    public static int[] getCurrentTime(JLabel label) {
-        int[] resultTimes = new int[3];
-        String time = label.getText();
-        String[] times = time.split(":");
-        resultTimes[0] = Integer.parseInt(times[0]);
-        resultTimes[1] = Integer.parseInt(times[1]);
-        resultTimes[2] = Integer.parseInt(times[2]);
-
-        return resultTimes;
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         String color = e.getActionCommand();

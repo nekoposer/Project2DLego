@@ -12,10 +12,6 @@ public class GridComponent extends JComponent {
         this.gridSizeHorizontal = gridSizeHorizontal;
     }
 
-    public int getSize(int gridSizeVertical) {
-        return gridSizeVertical;
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

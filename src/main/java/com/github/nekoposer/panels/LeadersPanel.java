@@ -38,6 +38,5 @@ public class LeadersPanel extends JPanel {
         table.setRowHeight(20);
         table.setSelectionBackground(Color.LIGHT_GRAY);
         add(new JScrollPane(table), BorderLayout.CENTER);
-
     }
 }

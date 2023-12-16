@@ -116,7 +116,6 @@ public class DrawPanel extends JPanel {
                             for (int i = 0; i < detailWidth; ++i) {
                                 for (int k = 0; k < detailHeight; ++k) {
                                     grid[clickedRow + k][clickedCol + i] = true;
-                                    colors[clickedRow + k][clickedCol + i] = null;
                                 }
                             }
                         }
